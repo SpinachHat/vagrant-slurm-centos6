@@ -25,6 +25,23 @@ host { 'node2':
     ensure => 'present',
     ip => '192.168.2.102',
 }
+host { 'node3':
+    ensure => 'present',
+    ip => '192.168.2.103',
+    }
+host { 'node4':
+    ensure => 'present',
+    ip => '192.168.2.104',
+}
+#host { 'node01':
+#    ensure => 'present',
+#    ip => '192.168.2.105',
+#}
+#host { 'node02':
+#    ensure => 'present',
+#    ip => '192.168.2.106',
+#}
+
 
 package { ['openssl-devel', 'zlib-devel', 'bzip2-devel', 'chrpath']:
     ensure => installed,

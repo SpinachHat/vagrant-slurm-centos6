@@ -9,14 +9,16 @@ Vagrant.configure("2") do |config|
 #    head.vm.provision "shell", path:"head.sh"
   end
 
-  config.vm.define "node1" do |node1|
-    node1.vm.box = ENV['CENTOS6_BOX']
-    node1.vm.hostname = "node1"
-    node1.vm.network "private_network", ip:"192.168.2.101"
-  end
-  config.vm.define "node2" do |node2|
-    node2.vm.box = ENV['CENTOS6_BOX']
-    node2.vm.hostname = "node2"
-    node2.vm.network "private_network", ip:"192.168.2.102"
+  (1..4).each do |i|
+    config.vm.define "node#{i}" do |config|
+      config.vm.box = ENV['CENTOS6_BOX']
+      config.vm.hostname = "node#{i}"
+      config.vm.network "private_network", ip:"192.168.2.#{i+100}"
+      config.vm.provision "shell", inline: "chmod 600 /home/vagrant/.ssh/authorized_keys"
+      config.vm.provider :virtualbox do |vb|
+        vb.customize "post-boot",["controlvm", :id, "setlinkstate1", "on"]
+	vb.memory = 512
+        vb.linked_clone = true
+    end
   end
 end
