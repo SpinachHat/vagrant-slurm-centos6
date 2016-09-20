@@ -78,3 +78,6 @@ MUNGE/
 
 #slurm config
 slurm.conf
+
+#RRD
+rrdsetup/

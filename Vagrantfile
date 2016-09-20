@@ -1,12 +1,14 @@
 Vagrant.configure("2") do |config|
 
-  config.vm.provision "puppet"
+  config.vm.provision "puppet", run: "always"
 
   config.vm.define "head" do |head|
     head.vm.box = ENV['CENTOS6_BOX']
     head.vm.network "private_network", ip:"192.168.2.100"
     head.vm.hostname = "head"
-#    head.vm.provision "shell", path:"head.sh"
+    head.vm.provider :virtualbox do |hn|  
+      hn.customize "post-boot",["controlvm", :id, "setlinkstate1", "on"]
+    end
   end
 
   (1..4).each do |i|
@@ -19,6 +21,7 @@ Vagrant.configure("2") do |config|
         vb.customize "post-boot",["controlvm", :id, "setlinkstate1", "on"]
 	vb.memory = 512
         vb.linked_clone = true
+      end
     end
   end
 end

@@ -17,6 +17,16 @@ host { 'head':
     ensure => 'present',
     ip => '192.168.2.100',
 }
+
+#$nodes => [1, 2, 3, 4, ]
+#define i{
+#  host { 'node$i':
+#    ensure => 'present'
+#    ip => '192.168.2.10$i'
+#  }
+#}
+#i {$nodes:}
+
 host { 'node1':
     ensure => 'present',
     ip => '192.168.2.101',
@@ -28,19 +38,11 @@ host { 'node2':
 host { 'node3':
     ensure => 'present',
     ip => '192.168.2.103',
-    }
+}
 host { 'node4':
     ensure => 'present',
     ip => '192.168.2.104',
 }
-#host { 'node01':
-#    ensure => 'present',
-#    ip => '192.168.2.105',
-#}
-#host { 'node02':
-#    ensure => 'present',
-#    ip => '192.168.2.106',
-#}
 
 
 package { ['openssl-devel', 'zlib-devel', 'bzip2-devel', 'chrpath']:
